@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using System.Configuration;
 
 namespace Gallery.Controllers
 {
@@ -209,6 +210,8 @@ namespace Gallery.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase files)
         {
+            string ImagesDir = ConfigurationManager.AppSettings["ImagesDir"];
+          
             try
             {
                 if (files != null)
@@ -224,7 +227,7 @@ namespace Gallery.Controllers
                                 bool IsLoad = true;
 
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath("~/Content/Images/") + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(ImagesDir) + ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
@@ -247,7 +250,7 @@ namespace Gallery.Controllers
                                         TempFileStream.Close();
 
                                         // List of all Directories names
-                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
+                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(ImagesDir)).ToList<string>();
 
                                         FileStream CheckFileStream;
                                         Bitmap CheckBmp;
