@@ -143,15 +143,15 @@ namespace Gallery.Controllers
         //[HttpGet]
 
         
-        [HttpGet]
-        public ActionResult Delete(string T = "")
+        [HttpPost]
+        public ActionResult Delete(string FilePathsss = "")
         {
             try
             {
-                if (T.Replace("/Content/Images/", "").Replace(Path.GetFileName(T), "").Replace("/", "") == Sha256.Compute(User.Identity.Name))
+                if (FilePathsss.Replace("/Content/Images/", "").Replace(Path.GetFileName(FilePathsss), "").Replace("/", "") == Sha256.Compute(User.Identity.Name))
                 {
-                    if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
-                        System.IO.File.Delete(Server.MapPath(T));
+                    if (FilePathsss != "" && Directory.Exists(Server.MapPath(FilePathsss.Replace(Path.GetFileName(FilePathsss), ""))))
+                        System.IO.File.Delete(Server.MapPath(FilePathsss));
                     else
                     {
                         ViewBag.Error = "File not found!";

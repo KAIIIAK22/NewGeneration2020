@@ -100,9 +100,9 @@
                             <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
                         </a>
                     </ul>
-                    @using (Html.BeginForm("Delete", "Home", FormMethod.Get, new { enctype = "string" }))
+                    @using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { enctype = "string" }))
                     {
-                        <input type="text" name="T" value="@ImagesDir/@dir.Replace(ImagesDirPath, "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
+                        <input type="text" name="FilePathsss" value="@ImagesDir/@dir.Replace(ImagesDirPath, "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
                         if (dir.Replace(ImagesDirPath, "") == Sha256.Compute(User.Identity.Name))
                         {
