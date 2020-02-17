@@ -1,0 +1,7 @@
+Gallery/bin/*
+!Gallery/bin/roslyn/*
+Gallery/Content/Images/*
+Gallery/App_Data/*
+Gallery/obj/*
+.vs/*
+packages/*
