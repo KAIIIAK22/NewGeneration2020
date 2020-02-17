@@ -6,13 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows.Media.Imaging;
 using System.Drawing;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.Configuration;
+using Gallary.Core;
 
 namespace Gallery.Controllers
 {
@@ -25,37 +22,16 @@ namespace Gallery.Controllers
         public static string dateCreation;
         public static string dateUpload;
 
-        //
-        // Hash-Function
-        // Input: String
-        // Otput: String with ShaHash
-        //
-        public static string ComputeSha256Hash(string rawData)
-        {
-            // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+    
 
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-
-        //
-        // check for equality of pictures
-        // Input: Bitmap1, Bitmap2
-        // Output:
-        //        true - is equal
-        //        false - isn't equal
-        //
-        public static bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
+            //
+            // check for equality of pictures
+            // Input: Bitmap1, Bitmap2
+            // Output:
+            //        true - is equal
+            //        false - isn't equal
+            //
+            public static bool CompareBitmapsFast(Bitmap bmp1, Bitmap bmp2)
         {
             if (bmp1 == null || bmp2 == null)
                 return false;
@@ -172,7 +148,7 @@ namespace Gallery.Controllers
         {
             try
             {
-                if (T.Replace("/Content/Images/", "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                if (T.Replace("/Content/Images/", "").Replace(Path.GetFileName(T), "").Replace("/", "") == Sha256.Compute(User.Identity.Name))
                 {
                     if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
                         System.IO.File.Delete(Server.MapPath(T));
@@ -227,7 +203,7 @@ namespace Gallery.Controllers
                                 bool IsLoad = true;
 
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(ImagesDir) + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(ImagesDir) + Sha256.Compute(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);

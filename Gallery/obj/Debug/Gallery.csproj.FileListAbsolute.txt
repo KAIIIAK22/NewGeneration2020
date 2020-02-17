@@ -756,3 +756,5 @@ C:\GIT\myforkNG2020\Gallery\obj\Debug\Gallery.csprojAssemblyReference.cache
 C:\GIT\myforkNG2020\Gallery\obj\Debug\Gallery.csproj.CopyComplete
 C:\GIT\myforkNG2020\Gallery\obj\Debug\Gallery.dll
 C:\GIT\myforkNG2020\Gallery\obj\Debug\Gallery.pdb
+C:\GIT\myforkNG2020\Gallery\bin\Gallary.Core.dll
+C:\GIT\myforkNG2020\Gallery\bin\Gallary.Core.pdb

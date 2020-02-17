@@ -11,6 +11,7 @@
 
 @using Gallery.Controllers
 @using System.Configuration
+@using Gallary.Core
 @{
     string ImagesDir = ConfigurationManager.AppSettings["ImagesDir"];
     // Directory path with all User's directories
@@ -18,7 +19,7 @@
     string ImagesDirPath = Server.MapPath(ImagesDir);
 
     // Encrypted User's directory path
-    string DirPath = ImagesDirPath +"/" + HomeController.ComputeSha256Hash(User.Identity.Name);
+    string DirPath = ImagesDirPath + "/" + Sha256.Compute(User.Identity.Name);
 
     // Directory path with temp files
     string TempDirPath = Server.MapPath("~/Content/Temp");
@@ -103,7 +104,7 @@
                     {
                         <input type="text" name="T" value="@ImagesDir/@dir.Replace(ImagesDirPath, "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
 
-                        if (dir.Replace(ImagesDirPath, "") == HomeController.ComputeSha256Hash(User.Identity.Name))
+                        if (dir.Replace(ImagesDirPath, "") == Sha256.Compute(User.Identity.Name))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 
