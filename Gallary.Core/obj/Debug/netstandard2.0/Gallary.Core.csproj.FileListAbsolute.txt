@@ -1,8 +1,0 @@
-C:\GIT\myforkNG2020\Gallary.Core\obj\Debug\netstandard2.0\Gallary.Core.csprojAssemblyReference.cache
-C:\GIT\myforkNG2020\Gallary.Core\obj\Debug\netstandard2.0\Gallary.Core.AssemblyInfoInputs.cache
-C:\GIT\myforkNG2020\Gallary.Core\obj\Debug\netstandard2.0\Gallary.Core.AssemblyInfo.cs
-C:\GIT\myforkNG2020\Gallary.Core\bin\Debug\netstandard2.0\Gallary.Core.deps.json
-C:\GIT\myforkNG2020\Gallary.Core\bin\Debug\netstandard2.0\Gallary.Core.dll
-C:\GIT\myforkNG2020\Gallary.Core\bin\Debug\netstandard2.0\Gallary.Core.pdb
-C:\GIT\myforkNG2020\Gallary.Core\obj\Debug\netstandard2.0\Gallary.Core.dll
-C:\GIT\myforkNG2020\Gallary.Core\obj\Debug\netstandard2.0\Gallary.Core.pdb

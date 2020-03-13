@@ -4,3 +4,7 @@ Gallery/Content/Images/*
 Gallery/obj/*
 .vs/*
 packages/*
+html/bin/*
+!html/bin/roslyn/*
+html/Content/Images/*
+html/obj/*
