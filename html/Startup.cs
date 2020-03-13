@@ -14,12 +14,7 @@ namespace html
     {
         public void Configuration(IAppBuilder app)
         {
-
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = "ApplicationCookie",
-                LoginPath = new PathString("/Account/Login"),
-            });
+            AuthConfig(app);
             /*  app.Run(context =>
               {
                   if (context.Request.Path.Value == "/test")
@@ -31,6 +26,15 @@ namespace html
                   return context.Response.WriteAsync("TEST");
               });*/
 
+        }
+
+        private static void AuthConfig(IAppBuilder app)
+        {
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationType = "ApplicationCookie",
+                LoginPath = new PathString("/Account/Login"),
+            });
         }
     }
 }
