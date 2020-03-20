@@ -14,7 +14,7 @@ namespace html
     {
         public void Configuration(IAppBuilder app)
         {
-            AuthConfig(app);
+           // AuthConfig(app);
             /*  app.Run(context =>
               {
                   if (context.Request.Path.Value == "/test")
