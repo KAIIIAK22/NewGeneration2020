@@ -1,0 +1,51 @@
+﻿@model html.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <hr />
+            <h4>Please Register</h4>
+            <hr />
+        </div>
+
+        <!-- Login Form -->
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nick, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.Nick, new { htmlAttributes = new { @class = "form-control fadeIn second" } })
+                    @Html.ValidationMessageFor(model => model.Nick, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control fadeIn third" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control fadeIn fourth" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                        <input type="submit" value="Register" class="btn btn-default fadeIn fifth" />
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

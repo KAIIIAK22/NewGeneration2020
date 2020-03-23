@@ -137,12 +137,12 @@ input[type=text] {
 }
 
     input[type=text]:focus {
-        background-color: #fff;
+        background-color: #fff; 
         border-bottom: 2px solid #5fbae9;
     }
 
     input[type=text]:placeholder {
-        color: #cccccc;
+        color: white;
     }
 
 
@@ -254,6 +254,11 @@ input[type=text] {
         -moz-animation-delay: 1s;
         animation-delay: 1s;
     }
+    .fadeIn.fifth {
+        -webkit-animation-delay: 1.2s;
+        -moz-animation-delay: 1.2s;
+        animation-delay: 1.2s;
+    }
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
@@ -285,4 +290,139 @@ input[type=text] {
 
 #icon {
     width: 60%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+    background: linear-gradient(320deg, #020043, #008298, #020043);
+    background-size: 600% 600%;
+    -webkit-animation: Back 12s ease infinite;
+    -moz-animation: Back 12s ease infinite;
+    -o-animation: Back 12s ease infinite;
+    animation: Back 12s ease infinite;
+}
+    @-webkit-keyframes Back {
+        0% {
+            background-position: 5% 0%
+        }
+
+        50% {
+            background-position: 96% 100%
+        }
+
+        100% {
+            background-position: 5% 0%
+        }
+    }
+
+    @-moz-keyframes Back {
+        0% {
+            background-position: 5% 0%
+        }
+
+        50% {
+            background-position: 96% 100%
+        }
+
+        100% {
+            background-position: 5% 0%
+        }
+    }
+
+    @-o-keyframes Back {
+        0% {
+            background-position: 5% 0%
+        }
+
+        50% {
+            background-position: 96% 100%
+        }
+
+        100% {
+            background-position: 5% 0%
+        }
+    }
+
+    @keyframes Back {
+        0% {
+            background-position: 5% 0%
+        }
+
+        50% {
+            background-position: 96% 100%
+        }
+
+        100% {
+            background-position: 5% 0%
+        }
+    }
+
+input#EmailOrLogin {
+    background: linear-gradient(320deg, #020043, #008298, #020043) !important;
+    background-color: initial !important;
+    color: white !important;
+}
+    input#EmailOrLogin:focus {
+        background: linear-gradient(90deg, #020043, #008298, #020043) !important;
+        background-color: initial !important;
+        color: white !important;
+    }
+input#Password {
+    background: linear-gradient(320deg, #020043, #008298, #020043) !important;
+    background-color: initial !important;
+    color: white !important;
+}
+    input#Password:focus {
+        background: linear-gradient(90deg, #020043, #008298, #020043) !important;
+        background-color: initial !important;
+        color: white !important;
+    }
+input#Email {
+    background: linear-gradient(320deg, #020043, #008298, #020043) !important;
+    background-color: initial !important;
+    color: white !important;
+}
+
+    input#Email:focus {
+        background: linear-gradient(90deg, #020043, #008298, #020043) !important;
+        background-color: initial !important;
+        color: white !important;
+    }
+input#Nick {
+    background: linear-gradient(320deg, #020043, #008298, #020043) !important;
+    background-color: initial !important;
+    color: white !important;
+}
+
+    input#Nick:focus {
+        background: linear-gradient(90deg, #020043, #008298, #020043) !important;
+        background-color: initial !important;
+        color: white !important;
+    }
+input:-internal-autofill-selected {
+    background: linear-gradient(90deg, #020043, #008298, #020043) !important;
+    background-color: initial !important;
+    color: white !important;
 }

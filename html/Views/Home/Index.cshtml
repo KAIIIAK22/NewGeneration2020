@@ -1,1 +1,15 @@
-﻿<h2>Welcome to ASP.NET MVC @ViewData["Version"] on @ViewData["Runtime"]!</h2>
+﻿@{ 
+if (User.Identity.IsAuthenticated)
+    {
+      <h2>Welcome @User.Identity.Name to ASP.NET MVC @ViewData["Version"] on @ViewData["Runtime"]!</h2>
+      <p />
+      @Html.ActionLink("LogOut", "LogOut", "Account");
+    }
+    else
+    {
+        @Html.ActionLink("Login", "Login", "Account");
+        <p/>
+         @Html.ActionLink("Register", "Register", "Account");
+        <p/>
+    }
+}
