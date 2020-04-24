@@ -1,7 +1,7 @@
-Gallery/bin/*
-!Gallery/bin/roslyn/*
-Gallery/Content/Images/*
-Gallery/obj/*
+DAL/bin/*
+!DAL/bin/roslyn/*
+DAL/Content/Images/*
+DAL/obj/*
 .vs/*
 packages/*
 html/bin/*
