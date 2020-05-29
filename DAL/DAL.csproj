@@ -77,9 +77,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IMediaRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="MediaRepository.cs" />
+    <Compile Include="Models\Attempt.cs" />
+    <Compile Include="Models\Configuration\AttemptConfiguration.cs" />
+    <Compile Include="Models\Configuration\MediaConfiguration.cs" />
+    <Compile Include="Models\Configuration\MediaTypeConfiguration.cs" />
+    <Compile Include="Models\Configuration\RoleConfiguration.cs" />
+    <Compile Include="Models\Configuration\TemporaryMediaConfiguration.cs" />
+    <Compile Include="Models\Media.cs" />
+    <Compile Include="Models\Configuration\UserConfiguration.cs" />
+    <Compile Include="Models\MediaType.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\TemporaryMedia.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserContext.cs" />
+    <Compile Include="Models\SQLContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UsersRepository.cs" />
   </ItemGroup>

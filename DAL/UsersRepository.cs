@@ -46,9 +46,9 @@ namespace DAL
             await __context.SaveChangesAsync();
         }
 
-        public string GetUsersEmail(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            return __context.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
+            return await __context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> FindUserAsync(string nickOrEmail, string userPassword)

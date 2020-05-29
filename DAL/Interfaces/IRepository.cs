@@ -15,7 +15,7 @@ namespace DAL.Interfaces
         Task<User> FindUserAsync(string nickOrEmail, string userPassword);
         int GetUsersIdByName(string username);
         int GetUsersIdByEmail(string userEmail);
-        string GetUsersEmail(int id);
+        Task<User> GetUserByIdAsync(int id);
         Task AddAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess);
     }
 }
