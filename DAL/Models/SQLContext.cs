@@ -7,9 +7,9 @@ using System.Web;
 
 namespace DAL.Models
 {
-    public class UserContext : DbContext
+    public class SQLContext : DbContext
     {
-        public UserContext() :
+        public SQLContext() :
             base("DefaultConnection")
         { }
 
