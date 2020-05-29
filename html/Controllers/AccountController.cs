@@ -1,15 +1,31 @@
-﻿using html.Models;
+﻿using html.Interfaces;
+using html.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using BLL.Interfaces;
+using System.Threading.Tasks;
+using BLL.Contracts;
 
 namespace html.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IUsersService _usersService;
+        private readonly IAuthenticationService _authenticationService;
+
+        public AccountController(IUsersService usersService, IAuthenticationService authenticationService)
+        {
+            _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
+            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+        }
+
+
+
+
         // GET: Account/Login
         public ActionResult Login()
         {
@@ -17,26 +33,83 @@ namespace html.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                // поиск пользователя в бд
-                User user = null;
-                using (UserContext db = new UserContext())
-                {
-          
-                    user = db.Users.FirstOrDefault(u => (u.Email == model.EmailOrLogin ||  u.Nick == model.EmailOrLogin) && u.Password == model.Password);
 
-                }
-                if (user != null)
+                var isUserExist = (await _usersService.IsUserExistByEmailAsync(new UserDto
                 {
-                    FormsAuthentication.SetAuthCookie(model.EmailOrLogin, true);
-                    return RedirectToAction("Index", "Home");
+                    UserEmail = model.EmailOrLogin,
+                    UserPassword = model.Password
+                })|| await _usersService.IsUserExistByNameAsync(new UserDto
+                {
+                    UserNick = model.EmailOrLogin,
+                    UserPassword = model.Password
+                }));
+
+                if (isUserExist)
+                {
+                    bool canAuthorize;
+                    if (model.EmailOrLogin.Contains('@'))
+                    {
+                         canAuthorize = await _usersService.IsUserExistAsync(new UserDto
+                        {
+                            UserEmail = model.EmailOrLogin,
+                            UserPassword = model.Password
+                        });
+                    }
+                    else
+                    {
+                         canAuthorize = await _usersService.IsUserExistAsync(new UserDto
+                        {
+                            UserNick = model.EmailOrLogin,
+                            UserPassword = model.Password
+                        });
+                    }
+                    
+                    var ipAddress = HttpContext.Request.UserHostAddress;
+                    AttemptDTO attemptDto = new AttemptDTO
+                    {
+                        NickOrEmail = model.EmailOrLogin,
+                        IpAddress = ipAddress,
+                        IsSuccess = canAuthorize
+                    };
+
+                    await _usersService.AddAttemptAsync(new AttemptDTO
+                    {
+                        NickOrEmail = model.EmailOrLogin,
+                        IpAddress = ipAddress,
+                        IsSuccess = canAuthorize
+                    });
+
+
+                    if (canAuthorize)
+                    {
+
+                        var userDto = await _usersService.FindUserAsync(new UserDto
+                        {
+                            //в этой проверке UserEmail = nickOrEmail
+                            UserEmail = model.EmailOrLogin,
+                            UserPassword = model.Password
+                        });
+                        
+
+
+                        var claim = _authenticationService.ClaimTypesСreation(userDto);
+                        _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+
+                        return RedirectToAction("Index", "Home");
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "User is not found");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
+                    ModelState.AddModelError("", "User not found");
                 }
             }
 
@@ -59,35 +132,60 @@ namespace html.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = null;
-                using (UserContext db = new UserContext())
-                {
-                    user = db.Users.FirstOrDefault(u => u.Email == model.Email);
-                }
-                if (user == null)
-                {
-                    // создаем нового пользователя
-                    using (UserContext db = new UserContext())
-                    {
-                        db.Users.Add(new User { Nick = model.Nick, Email = model.Email, Password = model.Password });
-                        db.SaveChanges();
 
-                        user = db.Users.Where(u => u.Email == model.Email && u.Password == model.Password).FirstOrDefault();
-                    }
-                    // если пользователь удачно добавлен в бд
-                    if (user != null)
+                var IfUserExist = (await _usersService.IsUserExistByEmailAsync(new UserDto
+                {
+                    UserEmail = model.Email,
+                    UserPassword = model.Password
+                }) || await _usersService.IsUserExistByNameAsync(new UserDto
+                {
+                    UserNick = model.Nick,
+                    UserPassword = model.Password
+                }));
+                var ipAddress = HttpContext.Request.UserHostAddress;
+
+
+
+                if (IfUserExist == false)
+                {
+                    //Create a new user
+
+
+
+
+                    await _usersService.AddUserAsync(new UserDto
                     {
-                        FormsAuthentication.SetAuthCookie(model.Email, true);
-                        return RedirectToAction("Index", "Home");
-                    }
+                        UserNick = model.Nick,
+                        UserEmail = model.Email,
+                        UserPassword = model.Password
+                    });
+
+                    await _usersService.AddAttemptAsync(new AttemptDTO
+                    {
+                        NickOrEmail = model.Email,
+                        IpAddress = ipAddress,
+                        IsSuccess = true
+                    });
+
+                    var userDto = await _usersService.FindUserAsync(new UserDto
+                    {
+                        UserNick = model.Nick,
+                        UserEmail = model.Email,
+                        UserPassword = model.Password
+                    });
+
+                    var claim = _authenticationService.ClaimTypesСreation(userDto);
+                    _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
+
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Пользователь с таким логином уже существует");
+                    ModelState.AddModelError("", "User already exists");
                 }
             }
 
@@ -99,9 +197,11 @@ namespace html.Controllers
         [Authorize]
         public ActionResult LogOut()
         {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
+            HttpContext.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("Index", "Home");
+            //FormsAuthentication.SignOut();
+            //Session.Abandon();
+            //return RedirectToAction("Index", "Home");
         }
 
 

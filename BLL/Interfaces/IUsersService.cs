@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    interface IUsersService
+    public interface IUsersService
     {
         Task<bool> IsUserExistAsync(UserDto userDto);
         Task<bool> IsUserExistByNameAsync(UserDto userDto);

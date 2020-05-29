@@ -31,6 +31,7 @@ namespace BLL.Services
 
         public async Task<UserDto> FindUserAsync(UserDto userDto)
         {
+            //UserEmail = nickOrEmail
             var user = await _repository.FindUserAsync(userDto.UserEmail, userDto.UserPassword);
             if (user != null)
                 return new UserDto
@@ -64,7 +65,7 @@ namespace BLL.Services
 
         public async Task AddAttemptAsync(AttemptDTO attemptDto)
         {
-            await _repository.AddAttemptToDatabaseAsync(attemptDto.Email, attemptDto.IpAddress, attemptDto.IsSuccess);
+            await _repository.AddAttemptToDatabaseAsync(attemptDto.NickOrEmail, attemptDto.IpAddress, attemptDto.IsSuccess);
         }
 
         public async Task<bool> IsUserExistByNameAsync(UserDto userDto)

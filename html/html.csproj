@@ -159,6 +159,7 @@
     <Compile Include="Models\Models.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserContext.cs" />
+    <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
