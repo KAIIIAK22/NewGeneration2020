@@ -43,8 +43,15 @@
   <ItemGroup>
     <Compile Include="Contracts\AttemptDTO.cs" />
     <Compile Include="Contracts\UserDto.cs" />
+    <Compile Include="FileSystemStorage\IMediaProvider.cs" />
+    <Compile Include="FileSystemStorage\MediaProvider.cs" />
+    <Compile Include="Interfaces\IExifDataService.cs" />
+    <Compile Include="Interfaces\IHashService.cs" />
+    <Compile Include="Interfaces\IImagesService.cs" />
     <Compile Include="Interfaces\IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\ImageServices.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
