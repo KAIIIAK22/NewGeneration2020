@@ -2,6 +2,10 @@ DAL/bin/*
 !DAL/bin/roslyn/*
 DAL/Content/Images/*
 DAL/obj/*
+BLL/bin/*
+!BLL/bin/roslyn/*
+BLL/Content/Images/*
+BLL/obj/*
 .vs/*
 packages/*
 html/bin/*
