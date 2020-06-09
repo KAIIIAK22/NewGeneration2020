@@ -9,6 +9,7 @@ using System.Web.Security;
 using BLL.Interfaces;
 using System.Threading.Tasks;
 using BLL.Contracts;
+using System.Windows;
 
 namespace html.Controllers
 {
@@ -16,7 +17,6 @@ namespace html.Controllers
     {
         private readonly IUsersService _usersService;
         private readonly IAuthenticationService _authenticationService;
-
         public AccountController(IUsersService usersService, IAuthenticationService authenticationService)
         {
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
@@ -29,12 +29,14 @@ namespace html.Controllers
         // GET: Account/Login
         public ActionResult Login()
         {
+            Console.WriteLine("ModelState.IsValid " + ModelState.IsValid);
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
+            
             if (ModelState.IsValid)
             {
 
@@ -47,7 +49,8 @@ namespace html.Controllers
                     UserNick = model.EmailOrLogin,
                     UserPassword = model.Password
                 }));
-
+              
+                
                 if (isUserExist)
                 {
                     bool canAuthorize;
@@ -58,6 +61,7 @@ namespace html.Controllers
                             UserEmail = model.EmailOrLogin,
                             UserPassword = model.Password
                         });
+                       
                     }
                     else
                     {
@@ -66,6 +70,7 @@ namespace html.Controllers
                             UserNick = model.EmailOrLogin,
                             UserPassword = model.Password
                         });
+                        
                     }
                     
                     var ipAddress = HttpContext.Request.UserHostAddress;
@@ -83,6 +88,7 @@ namespace html.Controllers
                         IsSuccess = canAuthorize
                     });
 
+                    
 
                     if (canAuthorize)
                     {
@@ -93,9 +99,9 @@ namespace html.Controllers
                             UserEmail = model.EmailOrLogin,
                             UserPassword = model.Password
                         });
-                        
 
 
+                        FormsAuthentication.SetAuthCookie(model.EmailOrLogin, true);
                         var claim = _authenticationService.ClaimTypesСreation(userDto);
                         _authenticationService.OwinCookieAuthentication(HttpContext.GetOwinContext(), claim);
 
@@ -170,6 +176,12 @@ namespace html.Controllers
                         IpAddress = ipAddress,
                         IsSuccess = true
                     });
+                    await _usersService.AddAttemptAsync(new AttemptDTO
+                    {
+                        NickOrEmail = model.Nick,
+                        IpAddress = ipAddress,
+                        IsSuccess = true
+                    });
 
                     var userDto = await _usersService.FindUserAsync(new UserDto
                     {
@@ -194,11 +206,16 @@ namespace html.Controllers
 
 
 
-        [Authorize]
+        
         public ActionResult LogOut()
         {
+            if (User.Identity.IsAuthenticated)
+            {
             HttpContext.GetOwinContext().Authentication.SignOut();
+            Session.Abandon();
             return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Account", "Login");
             //FormsAuthentication.SignOut();
             //Session.Abandon();
             //return RedirectToAction("Index", "Home");

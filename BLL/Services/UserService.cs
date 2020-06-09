@@ -20,7 +20,7 @@ namespace BLL.Services
 
         public async Task<bool> IsUserExistAsync(UserDto userDto)
         {
-            return (await _repository.IsUserExistByNameAsync(userDto.UserNick, userDto.UserPassword) && await _repository.IsUserExistByEmailAsync(userDto.UserEmail, userDto.UserPassword));
+            return (await _repository.IsUserExistByNameAsync(userDto.UserNick, userDto.UserPassword) || await _repository.IsUserExistByEmailAsync(userDto.UserEmail, userDto.UserPassword));
         }
 
         public async Task<bool> IsUserExistByEmailAsync(UserDto userDto)
@@ -70,7 +70,7 @@ namespace BLL.Services
 
         public async Task<bool> IsUserExistByNameAsync(UserDto userDto)
         {
-            return await _repository.IsUserExistByNameAsync(userDto.UserEmail, userDto.UserPassword);
+            return await _repository.IsUserExistByNameAsync(userDto.UserNick, userDto.UserPassword);
         }
 
         public int GetUsersId(string nickOrEmail)

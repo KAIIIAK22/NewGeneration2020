@@ -66,9 +66,14 @@ namespace DAL
             return __context.Users.Where(u => u.Email == userEmail).Select(u => u.Id).FirstOrDefault();
         }
 
-        public async Task AddAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess)
+        public async Task AddAttemptToDatabaseAsync(string nickOrEmail, string ipAddress, bool isSuccess)
         {
-            var user = await __context.Users.FirstOrDefaultAsync(p => p.Email == email);
+
+            User user; 
+                if(nickOrEmail.Contains("@"))
+                user = await __context.Users.FirstOrDefaultAsync(p => p.Email == nickOrEmail);
+                else
+                user = await __context.Users.FirstOrDefaultAsync(p => p.Nick == nickOrEmail);
             Attempt attempt2 = new Attempt
             {
                 TimeStamp = DateTime.Now,

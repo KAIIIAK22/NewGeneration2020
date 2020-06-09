@@ -12,7 +12,9 @@ namespace DAL.Models
         public SQLContext() :
             base("DefaultConnection")
         { }
-
+        public SQLContext(string connectionString) :
+            base("DefaultConnection")
+        { }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Media> Media { get; set; }

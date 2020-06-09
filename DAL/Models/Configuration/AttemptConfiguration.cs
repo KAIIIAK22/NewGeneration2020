@@ -14,7 +14,7 @@ namespace DAL.Models.Configuration
             ToTable("Attempt").
                 Property(a => a.TimeStamp).
                 IsRequired().
-                HasColumnType("datetime2");
+                HasColumnType("datetime");
 
         }
     }
